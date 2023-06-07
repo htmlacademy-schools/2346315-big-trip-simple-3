@@ -5,7 +5,7 @@
 ```bash
 npm i <package>@<version> -E
 npm i dayjs@1.11.6 -E
-npm i eslint@8.28.0 -DE
+\
 ```
 
 ## Зависимости приложения (`dependencies`)
