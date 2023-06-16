@@ -109,6 +109,50 @@ export default class EditingForm {
   removeElement() {
     this.element = null;
   }
+
+  static parsePointToState = (point) => ({...point});
+
+  static parseStateToPoint = (state) => ({...state});
+
+  #typeToggleHandler = (evt) => {
+    evt.preventDefault();
+    this.updateElement({type: evt.target.textContent.toLowerCase()});
+  };
+
+  #destinationToggleHandler = (evt) => {
+    evt.preventDefault();
+    this.updateElement({destination: genereateDestination(evt.target.value)});
+  };
+
+  #setInnerHandlers = () => {
+    this.element.querySelector('.event__type-group').addEventListener('click', this.#typeToggleHandler);
+    this.element.querySelector('#event-destination-1').addEventListener('change', this.#destinationToggleHandler);
+    this.element.querySelector('#event-start-time-1').addEventListener('input', this.#textInputHandler);
+    this.element.querySelector('#event-end-time-1').addEventListener('input', this.#textInputHandler);
+    this.element.querySelector('#event-price-1').addEventListener('input', this.#textInputHandler);
+  };
+
+  _restoreHandlers = () => {
+    this.#setInnerHandlers();
+    this.setClickHandler(this._callback.click);
+    this.setSubmitHandler(this._callback.formSubmit);
+  };
+
+  #textInputHandler = (evt) => {
+    evt.preventDefault();
+    const target = evt.target;
+    switch (target.id) {
+      case 'event-start-time-1':
+        this._setState({dateFrom: humanizeDateInSimpleDate(target.value)});
+        break;
+      case 'event-end-time-1':
+        this._setState({dateTo: humanizeDateInSimpleDate(target.value)});
+        break;
+      case 'event-price-1':
+        this._setState({basePrice: target.value});
+        break;
+    }
+  };
 }
 
 
