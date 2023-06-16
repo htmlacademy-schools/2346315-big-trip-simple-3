@@ -41,3 +41,5 @@ tripPointsModel.init()
     render(newPointButtonComponent, buttonContainer);
     newPointButtonComponent.setClickHandler(handleNewPointButtonClick);
   });
+
+
