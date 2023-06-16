@@ -153,6 +153,49 @@ export default class EditingForm {
         break;
     }
   };
+
+
+  #setDatepickers = () => {
+    this.#datepickers = [
+      flatpickr(
+        this.element.querySelector('#event-start-time-1'),
+        {
+          enableTime: true,
+          'time_24hr': true,
+          dateFormat: 'm/d/y H:i',
+          defaultDate: this._state.dateFrom,
+          onChange: this.#dateFromChangeHandler
+        }
+      ),
+      flatpickr(
+        this.element.querySelector('#event-end-time-1'),
+        {
+          enableTime: true,
+          'time_24hr': true,
+          dateFormat: 'd/m/y H:i',
+          defaultDate: this._state.dateTo,
+          onChange: this.#dateToChangeHandler
+        }
+      )
+    ];
+  };
+
+  #dateFromChangeHandler = ([userDate]) => {
+    this.updateElement({dateFrom: userDate});
+  };
+
+  #dateToChangeHandler = ([userDate]) => {
+    this.updateElement({dateTo: userDate});
+  };
+
+  removeElement = () => {
+    super.removeElement();
+
+    if (this.#datepickers) {
+      this.#datepickers.forEach((el) => el.destroy());
+      this.#datepickers = [];
+    }
+  };
 }
 
 
